@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 54858a5cb12f6aaf95f6ba45e4bbfe5dac5b55215fe3990abf2c8e4c81d8ab19
+-- hash: 8dbd90c4dae13b08d05333ce51618cc9b2710648c7403c01042d5255d4821d16
 
 name:           haskell-mini-patterns
 version:        0.1.0.0
@@ -28,6 +28,8 @@ source-repository head
 library
   exposed-modules:
       NewTypeTask
+      SmartConstructorTask.Tag
+      SmartConstructorTask.TagsList
   other-modules:
       Paths_haskell_mini_patterns
   hs-source-dirs:
