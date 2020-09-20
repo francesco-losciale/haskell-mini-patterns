@@ -1,5 +1,25 @@
 module NewTypeTask where
 
+-- Pattern
+-- Newtype
+
+-- Description
+-- Lightweight data wrapper.
+
+-- When to use
+-- When using the same primitive type (Int, Text, etc.) to represent semantically different entities (name, title, description, etc.).
+
+-- Benefits
+-- Improves maintainability.
+-- Increases code readability.
+-- Enables writing custom instances.
+-- Allows reusing instance definitions with DerivingVia.
+-- Costs
+-- Additional wrapping and unwrapping.
+-- Deriving boilerplate is required to duplicate existing behaviour of the underlying type.
+
+-- PS: think to primitive obsession when doing this test
+
 data Player = Player
     { playerHealth    :: Health
     , playerArmor     :: Armor
@@ -7,44 +27,23 @@ data Player = Player
     , playerDexterity :: Dexterity
     , playerStrength  :: Strength
     }
+newtype Health = Health Int
+newtype Armor = Armor Int
+newtype Attack = Attack Int
+newtype Dexterity = Dexterity Int
+newtype Strength = Strength Int
+newtype Damage = Damage Int
+newtype Defense = Defense Int
 
-newtype Health = Health {
-    h :: Int
-}    
-
-newtype Armor = Armor {
-    ar :: Int
-}
-
-newtype Attack = Attack {
-    at :: Int
-}
-
-newtype Dexterity = Dexterity {
-    dx :: Int
-}
-
-newtype Strength = Strength {
-    s :: Int
-}
-
-newtype Damage = Damage {
-    d :: Int
-}
-
-
-newtype Defense = Defense {
-    ds :: Int
-}
 
 calculatePlayerDamage :: Attack -> Strength -> Damage
-calculatePlayerDamage attack strength = Damage { d = (at attack) + (s strength) }
+calculatePlayerDamage (Attack attack) (Strength strength) = Damage (attack + strength) 
 
 calculatePlayerDefense :: Armor -> Dexterity -> Defense
-calculatePlayerDefense armor dexterity = Defense { ds = (ar armor) * (dx dexterity) }
+calculatePlayerDefense (Armor armor) (Dexterity dexterity) = Defense (armor * dexterity)
 
 calculateHit :: Damage -> Defense -> Health -> Health
-calculateHit damage defense health = Health { h = (h health) + (ds defense) - (d damage) }
+calculateHit (Damage damage) (Defense defense) (Health health) = Health (health + defense - damage)
 
 -- The second player hits first player and the new first player is returned
 hitPlayer :: Player -> Player -> Player
