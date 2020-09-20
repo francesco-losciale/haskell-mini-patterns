@@ -1,9 +1,9 @@
 module SmartConstructorTask.Tag where
 
 -- | Tag is a non-empty string.
-newtype Tag = Tag String
+newtype Tag = Tag String deriving Show
 
-mkTag :: String -> Tag
+mkTag :: String -> Maybe Tag
 mkTag tag
-    | null tag = error "Empty tag!"
-    | otherwise = Tag tag
+    | null tag = Nothing
+    | otherwise = Just $ Tag tag
